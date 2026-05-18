@@ -1,0 +1,24 @@
+{
+    "name": "drose/laravel-ai-rules",
+    "description": "A Laravel package to publish AI coding guidelines for Anti-Gravity, Copilot, Cursor, Claude, and Gemini, with built-in Spatie & Boost support.",
+    "type": "library",
+    "require": {
+        "php": "^8.0",
+        "illuminate/support": "^9.0|^10.0|^11.0",
+        "illuminate/console": "^9.0|^10.0|^11.0",
+        "laravel/boost": "^2.4",
+        "spatie/guidelines-skills": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Drose\\LaravelAiRules\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Drose\\LaravelAiRules\\LaravelAiRulesServiceProvider"
+            ]
+        }
+    }
+}
