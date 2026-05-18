@@ -16,6 +16,14 @@ class LaravelAiRulesServiceProvider extends ServiceProvider
             $this->commands([
                 PublishAiRulesCommand::class,
             ]);
+            
+            $this->publishes([
+                __DIR__.'/../config/ai-rules.php' => config_path('ai-rules.php'),
+            ], 'ai-rules-config');
+
+            $this->publishes([
+                __DIR__.'/../stubs/ai-rules.stub' => base_path('stubs/ai-rules.stub'),
+            ], 'ai-rules-stubs');
         }
     }
 
@@ -24,6 +32,8 @@ class LaravelAiRulesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/ai-rules.php', 'ai-rules'
+        );
     }
 }

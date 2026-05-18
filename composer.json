@@ -2,6 +2,17 @@
     "name": "drose/laravel-ai-rules",
     "description": "A Laravel package to publish AI coding guidelines for Anti-Gravity, Copilot, Cursor, Claude, and Gemini, with built-in Spatie & Boost support.",
     "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Drrrose",
+            "email": "splusboosting@gmail.com"
+        }
+    ],
+    "keywords": ["laravel", "ai", "cursor", "claude", "copilot", "rules", "guidelines"],
+    "homepage": "https://github.com/Drrrose/ai-rules-i-need",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": "^8.0",
         "illuminate/support": "^9.0|^10.0|^11.0",
@@ -9,9 +20,19 @@
         "laravel/boost": "^2.4",
         "spatie/guidelines-skills": "^1.0"
     },
+    "require-dev": {
+        "orchestra/testbench": "^8.0|^9.0",
+        "pestphp/pest": "^2.0|^3.0",
+        "pestphp/pest-plugin-laravel": "^2.0|^3.0"
+    },
     "autoload": {
         "psr-4": {
             "Drose\\LaravelAiRules\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Drose\\LaravelAiRules\\Tests\\": "tests/"
         }
     },
     "extra": {
@@ -19,6 +40,11 @@
             "providers": [
                 "Drose\\LaravelAiRules\\LaravelAiRulesServiceProvider"
             ]
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
         }
     }
 }

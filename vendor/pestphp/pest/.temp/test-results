@@ -1,0 +1,1 @@
+{"version":"pest_3.8.6","defects":[],"times":{"P\\Tests\\Feature\\PublishCommandTest::__pest_evaluable_it_can_publish_all_ai_rules_files":0.05,"P\\Tests\\Feature\\PublishCommandTest::__pest_evaluable_it_can_publish_config_and_stubs_via_vendor_publish":0.007}}
