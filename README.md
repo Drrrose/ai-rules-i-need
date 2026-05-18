@@ -59,6 +59,14 @@ composer config repositories.ai-rules vcs https://github.com/Drrrose/ai-rules-i-
 
 ## 📖 Usage
 
+### Interactive Setup (Recommended)
+To choose which AI rules to publish via a terminal interface:
+
+```bash
+php artisan ai:rules:install
+```
+*Note: Laravel Boost, Gemini, and Gemini CLI are selected by default.*
+
 ### Basic Usage
 To publish or refresh all AI rules files to your project root:
 
@@ -107,6 +115,8 @@ The command generates/updates the following files by default:
 - `.boost-rules.md` (Laravel Boost)
 - `.cursorrules` (Cursor)
 - `CLAUDE.md` (Claude Code)
+- `GEMINI.md` (Gemini CLI)
+- `agents.md` (Codex / AI Agents)
 - `.clinerules` (Cline)
 - `.windsurfrules` (Windsurf)
 - `.gemini-instructions.md` (Gemini)

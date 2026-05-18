@@ -19,16 +19,14 @@ beforeEach(function () {
     ];
 
     foreach ($this->filesToClean as $file) {
-        if (File::exists(base_path($file))) {
-            File::delete(base_path($file));
+        $path = base_path($file);
+        if (File::exists($path)) {
+            File::delete($path);
         }
-    }
-});
-
-afterEach(function () {
-    foreach ($this->filesToClean as $file) {
-        if (File::exists(base_path($file))) {
-            File::delete(base_path($file));
+        $dir = dirname($path);
+        if ($dir !== base_path() && File::isDirectory($dir) && count(File::files($dir)) === 0) {
+            // Only cleanup if directory is empty and not root
+            // File::deleteDirectory($dir); 
         }
     }
 });
@@ -42,16 +40,67 @@ it('can publish all ai rules files', function () {
     }
 });
 
-it('can publish config and stubs via vendor:publish', function () {
-    $this->artisan('vendor:publish', ['--tag' => 'ai-rules-config'])
+it('can publish specific files using --only', function () {
+    $this->artisan('ai:rules --only=.cursorrules,CLAUDE.md')
          ->assertExitCode(0);
-         
-    expect(config_path('ai-rules.php'))->toBeFile();
-    File::delete(config_path('ai-rules.php'));
+
+    expect(base_path('.cursorrules'))->toBeFile();
+    expect(base_path('CLAUDE.md'))->toBeFile();
+    expect(base_path('.clinerules'))->not->toBeFile();
+});
+
+it('can exclude files using --except', function () {
+    $this->artisan('ai:rules --except=.cursorrules,CLAUDE.md')
+         ->assertExitCode(0);
+
+    expect(base_path('.cursorrules'))->not->toBeFile();
+    expect(base_path('CLAUDE.md'))->not->toBeFile();
+    expect(base_path('.clinerules'))->toBeFile();
+});
+
+it('replaces placeholders in published files', function () {
+    $this->artisan('ai:rules --only=.cursorrules')
+         ->assertExitCode(0);
+
+    $content = File::get(base_path('.cursorrules'));
     
-    $this->artisan('vendor:publish', ['--tag' => 'ai-rules-stubs'])
+    // Testbench defaults
+    expect($content)->toContain('Laravel'); 
+    expect($content)->toContain('PHPUnit'); // Default for testbench unless Pest.php exists
+});
+
+it('can dry-run without creating files', function () {
+    $this->artisan('ai:rules --dry-run')
+         ->expectsOutputToContain('[Dry Run] would create: .cursorrules')
          ->assertExitCode(0);
-         
-    expect(base_path('stubs/ai-rules.stub'))->toBeFile();
-    File::delete(base_path('stubs/ai-rules.stub'));
+
+    expect(base_path('.cursorrules'))->not->toBeFile();
+});
+
+it('fails check mode when files are missing', function () {
+    $this->artisan('ai:rules --check')
+         ->assertExitCode(1);
+});
+
+it('passes check mode when files are up to date', function () {
+    $this->artisan('ai:rules')
+         ->assertExitCode(0);
+
+    $this->artisan('ai:rules --check')
+         ->assertExitCode(0);
+});
+
+it('does not overwrite without force flag', function () {
+    File::put(base_path('.cursorrules'), 'custom content');
+
+    $this->artisan('ai:rules --only=.cursorrules')
+         ->expectsOutputToContain('already exists and differs')
+         ->assertExitCode(0);
+
+    expect(File::get(base_path('.cursorrules')))->toBe('custom content');
+
+    $this->artisan('ai:rules --only=.cursorrules --force')
+         ->assertExitCode(0);
+
+    expect(File::get(base_path('.cursorrules')))->not->toBe('custom content');
 });

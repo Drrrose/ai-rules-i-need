@@ -9,21 +9,31 @@
             "email": "splusboosting@gmail.com"
         }
     ],
-    "keywords": ["laravel", "ai", "cursor", "claude", "copilot", "rules", "guidelines"],
+    "keywords": [
+        "laravel",
+        "ai",
+        "cursor",
+        "claude",
+        "copilot",
+        "rules",
+        "guidelines"
+    ],
     "homepage": "https://github.com/Drrrose/ai-rules-i-need",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^8.0",
-        "illuminate/support": "^9.0|^10.0|^11.0",
-        "illuminate/console": "^9.0|^10.0|^11.0",
+        "php": "^8.2",
+        "illuminate/support": "^10.0|^11.0|^12.0|^13.0",
+        "illuminate/console": "^10.0|^11.0|^12.0|^13.0",
         "laravel/boost": "^2.4",
         "spatie/guidelines-skills": "^1.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^8.0|^9.0",
+        "orchestra/testbench": "^8.0|^9.0|^10.0",
         "pestphp/pest": "^2.0|^3.0",
-        "pestphp/pest-plugin-laravel": "^2.0|^3.0"
+        "pestphp/pest-plugin-laravel": "^2.0|^3.0",
+        "laravel/pint": "^1.13",
+        "phpstan/phpstan": "^1.10"
     },
     "autoload": {
         "psr-4": {
@@ -34,6 +44,11 @@
         "psr-4": {
             "Drose\\LaravelAiRules\\Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "format": "vendor/bin/pint",
+        "analyse": "vendor/bin/phpstan analyse"
     },
     "extra": {
         "laravel": {

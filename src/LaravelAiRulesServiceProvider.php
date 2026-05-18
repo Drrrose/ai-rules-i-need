@@ -15,6 +15,7 @@ class LaravelAiRulesServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 PublishAiRulesCommand::class,
+                InstallAiRulesCommand::class,
             ]);
             
             $this->publishes([
